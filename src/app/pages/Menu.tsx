@@ -8,206 +8,162 @@ export default function Menu() {
   const menuItems = {
     entradas: [
       {
-        name: 'Carpaccio de Salmão',
-        description: 'Lâminas finas de salmão fresco com alcaparras, rúcula selvagem e azeite trufado',
-        price: 'R$ 42,00',
-        tags: ['Recomendado', 'Sem Glúten'],
-        spicy: false
+        name: 'Carpaccio de Mignon',
+        description: 'Lâminas finas de filé mignon, azeite trufado, alcaparras e lascas de grana padano',
+        price: '€ 42,00',
+        tags: ['Mais pedido', 'Sem Glúten'],
       },
       {
-        name: 'Bruschetta Italiana',
-        description: 'Pão artesanal torrado com tomate concassé, manjericão fresco e queijo burrata importado',
-        price: 'R$ 28,00',
+        name: 'Bruschetta Pomodoro',
+        description: 'Pão italiano tostado, tomates frescos, alho, manjericão e azeite extravirgem',
+        price: '€ 28,00',
         tags: ['Vegetariano'],
-        spicy: false
       },
       {
-        name: 'Camarão ao Alho',
-        description: 'Camarões rosa salteados em azeite de alho defumado com pimenta calabresa e limão siciliano',
-        price: 'R$ 48,00',
-        tags: ['Picante'],
-        spicy: true
+        name: 'Ceviche de Peixe Branco',
+        description: 'Peixe branco fresco cítrico, cebola roxa, pimenta dedo-de-moça e coentro',
+        price: '€ 48,00',
+        tags: ['Leve', 'Sem Glúten'],
       },
       {
-        name: 'Tábua de Frios Artesanais',
-        description: 'Seleção de queijos artesanais, frios nobres europeus, geleias caseiras, frutas secas e pães',
-        price: 'R$ 65,00',
-        tags: ['Para Compartilhar'],
-        spicy: false
+        name: 'Burrata ao Pesto',
+        description: 'Burrata cremosa, creme de pesto, tomates confitados e torradas artesanais',
+        price: '€ 65,00',
+        tags: ['Vegetariano'],
       },
       {
-        name: 'Ostras Frescas',
-        description: 'Meia dúzia de ostras frescas servidas com molho mignonette e limão',
-        price: 'R$ 58,00',
-        tags: ['Premium'],
-        spicy: false
+        name: 'Tartare de Salmão',
+        description: 'Salmão fresco com abacate, azeite de gergelim, cebolinha e chips de batata doce',
+        price: '€ 58,00',
+        tags: ['Fresco'],
       },
       {
-        name: 'Vieiras Grelhadas',
-        description: 'Vieiras seladas com purê de ervilhas e crispy de bacon',
-        price: 'R$ 52,00',
-        tags: ['Chef Recomenda'],
-        spicy: false
+        name: 'Camarões Crocantes',
+        description: 'Camarões empanados em panko com toque de coco, molho agridoce picante',
+        price: '€ 52,00',
+        tags: ['Novo'],
       },
     ],
     principais: [
       {
-        name: 'Filé Mignon ao Molho Madeira',
-        description: 'Filé mignon argentino grelhado ao ponto com molho madeira, batatas rústicas e legumes da estação',
-        price: 'R$ 78,00',
-        tags: ['Mais Pedido', 'Premium'],
-        spicy: false
+        name: 'Filé Mignon ao Poivre',
+        description: 'Medalhão de filé mignon ao molho de pimentas verdes, acompanhado de gratin dauphinois',
+        price: '€ 78,00',
+        tags: ['Chef Recomenda'],
       },
       {
-        name: 'Risoto de Camarão',
-        description: 'Risoto cremoso de arroz arbóreo com camarões rosa frescos, tomate seco e raspas de parmesão reggiano',
-        price: 'R$ 68,00',
-        tags: ['Especialidade'],
-        spicy: false
+        name: 'Risoto de Limão Siciliano',
+        description: 'Arroz arbóreo, limão siciliano, vinho branco, manteiga e parmesão',
+        price: '€ 68,00',
+        tags: ['Vegetariano'],
       },
       {
         name: 'Salmão Grelhado',
-        description: 'Filé de salmão norueguês grelhado com molho de maracujá, quinoa tricolor e aspargos',
-        price: 'R$ 72,00',
+        description: 'Posta de salmão grelhada com crosta de ervas, purê de mandioquinha e aspargos',
+        price: '€ 72,00',
         tags: ['Saudável', 'Sem Glúten'],
-        spicy: false
       },
       {
-        name: 'Massa ao Funghi Porcini',
-        description: 'Tagliatelle caseiro com cogumelos porcini selvagens e creme de trufas negras',
-        price: 'R$ 58,00',
-        tags: ['Vegetariano', 'Premium'],
-        spicy: false
+        name: 'Ravioli de Costela',
+        description: 'Massa fresca recheada com costela bovina desfiada, molho roti e sálvia',
+        price: '€ 58,00',
       },
       {
-        name: 'Cordeiro Confitado',
-        description: 'Carré de cordeiro confitado com crosta de ervas, purê de batata-doce e redução de vinho tinto',
-        price: 'R$ 85,00',
-        tags: ['Premium', 'Chef Recomenda'],
-        spicy: false
-      },
-      {
-        name: 'Peixe do Dia',
-        description: 'Pescado fresco do dia preparado com molho especial do chef (consulte nosso garçom)',
-        price: 'R$ 68,00',
-        tags: ['Fresco'],
-        spicy: false
-      },
-      {
-        name: 'Magret de Pato',
-        description: 'Peito de pato selado com molho de laranja e gengibre, polenta cremosa',
-        price: 'R$ 76,00',
+        name: 'Carré de Cordeiro',
+        description: 'Carré de cordeiro grelhado ao molho de hortelã, cuscuz marroquino com damascos',
+        price: '€ 85,00',
         tags: ['Premium'],
-        spicy: false
       },
       {
-        name: 'Ossobuco',
-        description: 'Ossobuco bovino braseado por 8 horas com risoto milanês',
-        price: 'R$ 82,00',
+        name: 'Polvo à Lagareiro',
+        description: 'Polvo confitado em azeite, batatas ao murro, alho confit e brócolis',
+        price: '€ 68,00',
         tags: ['Especialidade'],
-        spicy: false
+      },
+      {
+        name: 'Magret de Canard',
+        description: 'Peito de pato grelhado ao molho de frutas vermelhas, purê de batata baroa e aspargos',
+        price: '€ 76,00',
+        tags: ['Gourmet'],
+      },
+      {
+        name: 'Linguine ai Frutti di Mare',
+        description: 'Massa artesanal longa com frutos do mar selecionados, molho de tomate fresco e ervas',
+        price: '€ 82,00',
       },
     ],
     sobremesas: [
       {
-        name: 'Petit Gâteau',
-        description: 'Bolo quente de chocolate belga com recheio cremoso, acompanhado de sorvete de baunilha Madagascar',
-        price: 'R$ 28,00',
-        tags: ['Mais Pedido'],
-        spicy: false
-      },
-      {
         name: 'Tiramisù Clássico',
-        description: 'Tradicional sobremesa italiana com camadas de café expresso, mascarpone e cacau',
-        price: 'R$ 26,00',
-        tags: ['Tradicional'],
-        spicy: false
+        description: 'Biscoito savoiardi, café expresso, queijo mascarpone e cacau em pó',
+        price: '€ 28,00',
+        tags: ['Italiano'],
       },
       {
         name: 'Cheesecake de Frutas Vermelhas',
-        description: 'Cheesecake cremoso de baunilha com calda de frutas vermelhas frescas e coulis',
-        price: 'R$ 24,00',
-        tags: ['Leve'],
-        spicy: false
+        description: 'Cheesecake cremosa com calda de frutas vermelhas e base de biscoito amanteigado',
+        price: '€ 26,00',
+        tags: ['Mais vendido'],
       },
       {
-        name: 'Panna Cotta',
-        description: 'Panna cotta de baunilha com redução de frutas cítricas e hortelã',
-        price: 'R$ 22,00',
-        tags: ['Refrescante'],
-        spicy: false
-      },
-      {
-        name: 'Brownie com Sorvete',
-        description: 'Brownie caseiro de chocolate com nozes, sorvete de pistache e calda quente',
-        price: 'R$ 26,00',
-        tags: ['Indulgente'],
-        spicy: false
+        name: 'Petit Gâteau',
+        description: 'Bolinho de chocolate meio amargo com casquinha crocante e recheio cremoso, sorvete de baunilha',
+        price: '€ 24,00',
       },
       {
         name: 'Crème Brûlée',
-        description: 'Creme de baunilha com crosta caramelizada e frutas frescas',
-        price: 'R$ 24,00',
-        tags: ['Clássico'],
-        spicy: false
+        description: 'Creme de baunilha de Madagascar com crosta de açúcar caramelizado',
+        price: '€ 22,00',
+        tags: ['Francês', 'Sem Glúten'],
+      },
+      {
+        name: 'Torta de Maçã',
+        description: 'Torta rústica de maçã com canela e amêndoas, servida quente com sorvete de caramelo salgado',
+        price: '€ 26,00',
+        tags: ['Conforto'],
+      },
+      {
+        name: 'Pudim de Leite Condensado',
+        description: 'Pudim cremoso sem furinhos, calda de caramelo dourado e fava de baunilha',
+        price: '€ 24,00',
       },
     ],
     bebidas: [
       {
         name: 'Vinho Tinto Reserva',
-        description: 'Seleção premium de vinhos tintos (Malbec, Cabernet Sauvignon, Merlot)',
-        price: 'R$ 32,00 / R$ 145,00',
-        tags: ['Carta Completa'],
-        spicy: false
+        description: 'Cabernet Sauvignon chileno, aromas de frutas negras e toque de carvalho',
+        price: '€ 32,00 / € 145,00',
+        tags: ['Taça / Garrafa'],
       },
       {
-        name: 'Vinho Branco',
-        description: 'Vinhos brancos selecionados (Chardonnay, Sauvignon Blanc, Riesling)',
-        price: 'R$ 28,00 / R$ 125,00',
-        tags: [],
-        spicy: false
+        name: 'Vinho Branco Blend',
+        description: 'Chardonnay e Sauvignon Blanc argentino, fresco e frutado',
+        price: '€ 28,00 / € 120,00',
+        tags: ['Taça / Garrafa'],
       },
       {
         name: 'Espumante Brut',
-        description: 'Espumantes brasileiros e importados',
-        price: 'R$ 35,00 / R$ 160,00',
-        tags: ['Celebração'],
-        spicy: false
+        description: 'Espumante brasileiro premiado, método tradicional com notas de maçã verde',
+        price: '€ 25,00 / € 110,00',
+        tags: ['Taça / Garrafa'],
       },
       {
-        name: 'Champagne',
-        description: 'Champagnes franceses premium (Moët, Veuve Clicquot, Dom Pérignon)',
-        price: 'A partir de R$ 380,00',
-        tags: ['Premium'],
-        spicy: false
-      },
-      {
-        name: 'Drinks Autorais',
-        description: 'Criações exclusivas do nosso mixologista (consulte nosso bar menu especial)',
-        price: 'A partir de R$ 24,00',
+        name: 'Coquetel Signature Sabor & Alma',
+        description: 'Gin premium, xarope de hibisco, limão siciliano, tônica e espuma de gengibre',
+        price: '€ 36,00',
         tags: ['Exclusivo'],
-        spicy: false
       },
       {
-        name: 'Sucos Naturais',
-        description: 'Laranja, limão, abacaxi, morango, maracujá (frescos e sem conservantes)',
-        price: 'R$ 12,00',
-        tags: ['Natural'],
-        spicy: false
+        name: 'Suco Natural',
+        description: 'Laranja, limão, maracujá, abacaxi com hortelã ou melancia',
+        price: '€ 12,00',
+        tags: ['Sem Álcool'],
       },
       {
-        name: 'Café Especial',
-        description: 'Espresso, cappuccino, macchiato com grãos selecionados',
-        price: 'R$ 8,00 - R$ 14,00',
-        tags: [],
-        spicy: false
-      },
-      {
-        name: 'Água com Gás / Sem Gás',
-        description: 'Águas minerais nacionais e importadas',
-        price: 'R$ 6,00 - R$ 12,00',
-        tags: [],
-        spicy: false
+        name: 'Refrigerantes e Água',
+        description: 'Coca-Cola, Guaraná Antarctica, Água com ou sem gás',
+        price: '€ 8,00',
+        tags: ['Sem Álcool'],
       },
     ],
   };
