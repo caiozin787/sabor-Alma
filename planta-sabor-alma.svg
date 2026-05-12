@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .wall { fill: #f6f3ee; stroke: #394147; stroke-width: 4; }
+      .zone { fill: #ffffff; stroke: #394147; stroke-width: 2; }
+      .label { font-family: Arial, sans-serif; font-size: 20px; fill: #394147; }
+      .small { font-size: 16px; }
+      .device { fill: #c9723a; stroke: #394147; stroke-width: 2; }
+      .ap { fill: #c9723a; }
+      .rj { fill: #394147; }
+      .line { stroke: #394147; stroke-width: 2; stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+
+  <!-- Outer wall -->
+  <rect x="40" y="40" width="1120" height="720" class="wall" />
+
+  <!-- Zones -->
+  <rect x="60" y="60" width="820" height="360" class="zone" />
+  <rect x="880" y="60" width="260" height="360" class="zone" />
+  <rect x="60" y="420" width="420" height="200" class="zone" />
+  <rect x="480" y="420" width="400" height="200" class="zone" />
+  <rect x="880" y="420" width="260" height="140" class="zone" />
+  <rect x="880" y="560" width="260" height="200" class="zone" />
+
+  <!-- Labels -->
+  <text x="80" y="90" class="label">SALA (60 m2)</text>
+  <text x="900" y="90" class="label">COZINHA (25 m2)</text>
+  <text x="80" y="450" class="label">BALCAO (10 m2)</text>
+  <text x="500" y="450" class="label">ESCRITORIO (8 m2)</text>
+  <text x="900" y="450" class="label">ARMAZEM (7 m2)</text>
+  <text x="900" y="590" class="label">AREA TECNICA / RACK (4 m2)</text>
+
+  <!-- Devices -->
+  <!-- APs in sala -->
+  <circle cx="240" cy="220" r="16" class="ap" />
+  <text x="200" y="200" class="label small">AP-SALA</text>
+
+  <circle cx="520" cy="300" r="16" class="ap" />
+  <text x="480" y="280" class="label small">AP-ENTRADA</text>
+
+  <!-- POS at balcao -->
+  <rect x="90" y="500" width="40" height="30" class="device" />
+  <text x="80" y="540" class="label small">POS</text>
+
+  <!-- Kitchen terminal -->
+  <rect x="900" y="140" width="60" height="30" class="device" />
+  <text x="900" y="190" class="label small">PC-COZ</text>
+
+  <!-- Admin PC and printer -->
+  <rect x="520" y="500" width="50" height="30" class="device" />
+  <text x="500" y="540" class="label small">PC-ADMIN</text>
+  <rect x="600" y="500" width="50" height="30" class="device" />
+  <text x="590" y="540" class="label small">PRN-ADM</text>
+
+  <!-- Rack -->
+  <rect x="920" y="620" width="120" height="80" class="device" />
+  <text x="930" y="665" class="label small">RACK</text>
+
+  <!-- RJ45 points (dots) -->
+  <circle cx="120" cy="560" r="6" class="rj" />
+  <circle cx="980" cy="220" r="6" class="rj" />
+  <circle cx="560" cy="560" r="6" class="rj" />
+  <circle cx="640" cy="560" r="6" class="rj" />
+  <circle cx="980" cy="700" r="6" class="rj" />
+
+  <!-- Dotted links to rack -->
+  <line x1="120" y1="560" x2="980" y2="700" class="line" />
+  <line x1="980" y1="220" x2="980" y2="700" class="line" />
+  <line x1="560" y1="560" x2="980" y2="700" class="line" />
+  <line x1="640" y1="560" x2="980" y2="700" class="line" />
+
+  <!-- Legend -->
+  <rect x="60" y="640" width="520" height="100" class="zone" />
+  <text x="80" y="670" class="label small">Legenda:</text>
+  <circle cx="170" cy="665" r="8" class="ap" />
+  <text x="190" y="670" class="label small">AP</text>
+  <rect x="250" y="656" width="16" height="16" class="device" />
+  <text x="272" y="670" class="label small">Dispositivo</text>
+  <circle cx="380" cy="665" r="6" class="rj" />
+  <text x="395" y="670" class="label small">RJ45</text>
+  <line x1="460" y1="665" x2="520" y2="665" class="line" />
+  <text x="530" y="670" class="label small">Cabo</text>
+</svg>
