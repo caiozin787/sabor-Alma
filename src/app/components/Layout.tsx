@@ -35,28 +35,10 @@ export default function Layout() {
               >
                 Sobre
               </Link>
-              <Link
-                to="/cardapio"
-                className={`transition ${isActive('/cardapio') ? 'text-amber-600' : 'text-neutral-700 hover:text-amber-600'}`}
-              >
+              <Link to="/cardapio" className="text-neutral-600 hover:text-amber-600 transition font-serif">
                 Cardápio
               </Link>
-              <Link
-                to="/galeria"
-                className={`transition ${isActive('/galeria') ? 'text-amber-600' : 'text-neutral-700 hover:text-amber-600'}`}
-              >
-                Galeria
-              </Link>
-              <Link
-                to="/contato"
-                className={`transition ${isActive('/contato') ? 'text-amber-600' : 'text-neutral-700 hover:text-amber-600'}`}
-              >
-                Contato
-              </Link>
-              <Link
-                to="/contato"
-                className="bg-amber-600 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition"
-              >
+              <Link to="/reservas" className="bg-amber-600 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition font-serif">
                 Reservar
               </Link>
             </div>
@@ -107,11 +89,11 @@ export default function Layout() {
                   Contato
                 </Link>
                 <Link
-                  to="/contato"
+                  to="/reservas"
                   onClick={() => setMobileMenuOpen(false)}
                   className="bg-amber-600 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition text-center"
                 >
-                  Reservar
+                  Fazer Reserva
                 </Link>
               </div>
             </div>

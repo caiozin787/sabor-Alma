@@ -61,7 +61,7 @@ export default function Home() {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
-              to="/contato"
+              to="/reservas"
               className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-full text-lg hover:bg-white/20 transition border border-white/30"
             >
               Fazer Reserva
@@ -170,7 +170,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Call to Action */}
       <section className="py-20 bg-amber-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-serif mb-6">Pronto para uma experiência única?</h2>
@@ -178,7 +178,7 @@ export default function Home() {
             Faça sua reserva agora e garanta sua mesa em um dos restaurantes mais exclusivos da cidade
           </p>
           <Link
-            to="/contato"
+            to="/reservas"
             className="inline-block bg-white text-amber-600 px-10 py-4 rounded-full text-lg font-semibold hover:bg-neutral-100 transition"
           >
             Reservar Agora

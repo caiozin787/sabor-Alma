@@ -10,9 +10,9 @@ export default function About() {
   ];
 
   const team = [
-    { name: 'Chef Alessandro Martini', role: 'Chef Executivo', description: '20 anos de experiência em restaurantes estrelados na Europa' },
-    { name: 'Chef Patricia Souza', role: 'Sous Chef', description: 'Especialista em culinária contemporânea brasileira' },
-    { name: 'Sommelier Carlos Mendes', role: 'Sommelier', description: 'Curador de nossa carta de vinhos premiada' },
+    { name: 'Chef Caio Santos', role: 'Chef Executivo', description: '20 anos de experiência em restaurantes estrelados na Europa' },
+    { name: 'Chef João Lucas', role: 'Sous Chef', description: 'Especialista em culinária contemporânea brasileira' },
+    { name: 'Deficiente Anthony Soares', role: 'Deficiente', description: 'Curador de nossa carta de vinhos premiada' },
   ];
 
   const timeline = [
