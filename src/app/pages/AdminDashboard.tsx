@@ -1,27 +1,18 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Check, X, Clock, Users, Calendar, MapPin, CheckCircle, TrendingUp, XCircle } from 'lucide-react';
+import { Check, X, Clock, Users, Calendar, CheckCircle, TrendingUp, XCircle } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 interface Reservation {
   id: string;
   customer_name: string;
+  customer_email: string;
   customer_phone: string;
   reservation_date: string;
   reservation_time: string;
   guests: number;
   status: string;
-  table_number: number;
-  location: string;
   confirmation_code: string;
-}
-
-interface Table {
-  id: string;
-  table_number: number;
-  capacity: number;
-  location: string;
-  status: string;
 }
 
 interface Analytics {
@@ -32,18 +23,20 @@ interface Analytics {
 
 export default function AdminDashboard() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
-  const [tables, setTables] = useState<Table[]>([]);
   const [analytics, setAnalytics] = useState<Analytics>({ total: 0, active: 0, cancelled: 0 });
   const [loading, setLoading] = useState(true);
 
   const fetchDashboardData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/v1/admin/dashboard');
+      const response = await fetch('http://localhost:3001/api/v1/reservations');
       if (response.ok) {
         const data = await response.json();
-        setReservations(data.reservations || []);
-        setTables(data.tables || []);
-        setAnalytics(data.analytics || { total: 0, active: 0, cancelled: 0 });
+        const items = data.reservations || [];
+        setReservations(items);
+        const total = items.length;
+        const active = items.filter((item: Reservation) => item.status === 'PENDING' || item.status === 'CONFIRMED').length;
+        const cancelled = items.filter((item: Reservation) => item.status === 'CANCELLED').length;
+        setAnalytics({ total, active, cancelled });
       } else {
         toast.error('Erro ao carregar dados do dashboard.');
       }
@@ -79,11 +72,27 @@ export default function AdminDashboard() {
     }
   };
 
+  const cancelReservation = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/reservations/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        toast.success('Reserva cancelada.');
+        fetchDashboardData();
+      } else {
+        toast.error('Erro ao cancelar reserva.');
+      }
+    } catch (error) {
+      toast.error('Erro de conexão com a API.');
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'PENDING': return 'bg-yellow-100 text-yellow-800';
-      case 'CHECKED_IN': return 'bg-green-100 text-green-800';
-      case 'COMPLETED': return 'bg-blue-100 text-blue-800';
+      case 'CONFIRMED': return 'bg-green-100 text-green-800';
       case 'CANCELLED': return 'bg-red-100 text-red-800';
       default: return 'bg-gray-100 text-gray-800';
     }
@@ -95,9 +104,8 @@ export default function AdminDashboard() {
 
   // Dashboard calculations
   const totalReservations = reservations.length;
-  const activeReservations = reservations.filter(r => r.status === 'PENDING' || r.status === 'CHECKED_IN').length;
-  const cancelledReservations = reservations.filter(r => r.status === 'CANCELLED').length;
-  const occupiedTablesCount = tables.filter(t => t.status === 'OCCUPIED').length;
+  const activeReservations = analytics.active;
+  const cancelledReservations = analytics.cancelled;
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -139,8 +147,8 @@ export default function AdminDashboard() {
             <CheckCircle className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-sm text-neutral-500 font-medium">Mesas Ocupadas</p>
-            <p className="text-2xl font-bold">{occupiedTablesCount} / {tables.length}</p>
+            <p className="text-sm text-neutral-500 font-medium">Reservas Confirmadas</p>
+            <p className="text-2xl font-bold">{reservations.filter(r => r.status === 'CONFIRMED').length}</p>
           </div>
         </div>
       </div>
@@ -161,9 +169,8 @@ export default function AdminDashboard() {
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="font-semibold text-lg">{res.customer_name}</h3>
                     <span className={`px-2 py-1 text-xs font-semibold rounded-full border ${getStatusColor(res.status)}`}>
-                      {res.status === 'PENDING' ? 'PENDENTE' : 
-                       res.status === 'CHECKED_IN' ? 'EM ATENDIMENTO' : 
-                       res.status === 'COMPLETED' ? 'CONCLUÍDO' : 
+                      {res.status === 'PENDING' ? 'PENDENTE' :
+                       res.status === 'CONFIRMED' ? 'CONFIRMADO' :
                        res.status === 'CANCELLED' ? 'CANCELADO' : res.status}
                     </span>
                     <span className="text-xs font-mono bg-neutral-100 px-2 py-1 rounded border border-neutral-200">
@@ -182,7 +189,7 @@ export default function AdminDashboard() {
                       <Users className="w-4 h-4" /> {res.guests} Pessoas
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4" /> Mesa {res.table_number} ({res.location})
+                      Email: {res.customer_email}
                     </div>
                   </div>
                 </div>
@@ -193,53 +200,34 @@ export default function AdminDashboard() {
                       <Button 
                         size="sm" 
                         className="bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto"
-                        onClick={() => updateReservationStatus(res.id, 'CHECKED_IN')}
+                        onClick={() => updateReservationStatus(res.id, 'CONFIRMED')}
                       >
-                        <Check className="w-4 h-4 mr-1" /> Check-in
+                        <Check className="w-4 h-4 mr-1" /> Confirmar
                       </Button>
                       <Button 
                         size="sm" 
                         variant="destructive"
                         className="w-full sm:w-auto"
-                        onClick={() => updateReservationStatus(res.id, 'CANCELLED')}
+                        onClick={() => cancelReservation(res.id)}
                       >
                         <X className="w-4 h-4 mr-1" /> Cancelar
                       </Button>
                     </>
                   )}
-                  {res.status === 'CHECKED_IN' && (
+                  {res.status === 'CONFIRMED' && (
                     <Button 
                       size="sm" 
-                      className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
-                      onClick={() => updateReservationStatus(res.id, 'COMPLETED')}
+                      variant="destructive"
+                      className="w-full sm:w-auto"
+                      onClick={() => cancelReservation(res.id)}
                     >
-                      <CheckCircle className="w-4 h-4 mr-1" /> Finalizar (Desocupar)
+                      <X className="w-4 h-4 mr-1" /> Cancelar
                     </Button>
                   )}
                 </div>
               </div>
             ))
           )}
-        </div>
-
-        {/* Status das Mesas */}
-        <div>
-          <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Status das Mesas</h2>
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-neutral-100">
-            <div className="space-y-4">
-              {tables.map(table => (
-                <div key={table.id} className="flex items-center justify-between p-3 bg-neutral-50 rounded-md border border-neutral-200">
-                  <div>
-                    <div className="font-semibold text-neutral-900">Mesa {table.table_number}</div>
-                    <div className="text-xs text-neutral-500">{table.location} • {table.capacity} lugares</div>
-                  </div>
-                  <span className={`px-2 py-1 text-xs font-semibold rounded-full ${table.status === 'AVAILABLE' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800'}`}>
-                    {table.status === 'AVAILABLE' ? 'LIVRE' : 'OCUPADA'}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -8,18 +8,65 @@ import { toast } from 'sonner';
 export default function Reservations() {
   const [loading, setLoading] = useState(false);
   const [reservationCode, setReservationCode] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [isTimeOpen, setIsTimeOpen] = useState(false);
+
+  const timeSlots = [
+    '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00',
+    '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00',
+    '22:30', '23:00',
+  ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!selectedTime) {
+      toast.error('Selecione um horario para a reserva.');
+      return;
+    }
+
+    if (!timeSlots.includes(selectedTime)) {
+      toast.error('Horario selecionado invalido.');
+      return;
+    }
+
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
+    const email = String(formData.get('email') || '').trim();
+    const date = String(formData.get('date') || '').trim();
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      toast.error('Email invalido.');
+      setLoading(false);
+      return;
+    }
+
+    if (!date) {
+      toast.error('Informe a data da reserva.');
+      setLoading(false);
+      return;
+    }
+
+    const reservationDateTime = new Date(`${date}T${selectedTime}:00`);
+    if (Number.isNaN(reservationDateTime.getTime())) {
+      toast.error('Data ou horario invalido.');
+      setLoading(false);
+      return;
+    }
+
+    if (reservationDateTime < new Date()) {
+      toast.error('Data ou horario no passado.');
+      setLoading(false);
+      return;
+    }
     const data = {
       name: formData.get('name'),
-      email: formData.get('email'),
+      email,
       phone: formData.get('phone'),
-      date: formData.get('date'),
-      time: formData.get('time'),
+      date,
+      time: selectedTime,
       guests: Number(formData.get('guests')),
       notes: formData.get('notes'),
     };
@@ -104,8 +151,41 @@ export default function Reservations() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="time">Horário</Label>
-              <Input id="time" name="time" type="time" required />
+              <Label>Horário</Label>
+              <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
+                <button
+                  type="button"
+                  onClick={() => setIsTimeOpen((prev) => !prev)}
+                  className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-left text-sm font-medium text-neutral-700 hover:border-amber-400"
+                  aria-expanded={isTimeOpen}
+                >
+                  {selectedTime ? `Horario selecionado: ${selectedTime}` : 'Clique para escolher o horario'}
+                </button>
+
+                {isTimeOpen ? (
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    {timeSlots.map((time) => (
+                      <button
+                        key={time}
+                        type="button"
+                        onClick={() => {
+                          setSelectedTime(time);
+                          setIsTimeOpen(false);
+                        }}
+                        aria-pressed={selectedTime === time}
+                        className={
+                          selectedTime === time
+                            ? 'w-full rounded-md border border-amber-600 bg-amber-600 text-white px-2 py-2 text-sm font-semibold shadow-sm'
+                            : 'w-full rounded-md border border-neutral-200 bg-white text-neutral-700 px-2 py-2 text-sm font-medium hover:border-amber-400 hover:text-amber-700'
+                        }
+                      >
+                        {time}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+                <p className="mt-2 text-xs text-neutral-500">Almoco: 12h - 15h. Jantar: 19h - 23h.</p>
+              </div>
             </div>
           </div>
 
