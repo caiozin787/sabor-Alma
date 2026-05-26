@@ -17,6 +17,7 @@ export const env = {
   port: Number(process.env.RESERVATION_PORT || 3001),
   frontendUrl: process.env.RESERVATION_FRONTEND_URL || '',
   publicUrl: process.env.RESERVATION_PUBLIC_URL || '',
+  adminEmail: process.env.RESERVATION_ADMIN_EMAIL || 'a10915@csmiguel.pt',
   timezone: process.env.RESERVATION_TIMEZONE || 'America/Sao_Paulo',
   maxGuestsPerSlot: Number(process.env.RESERVATION_MAX_GUESTS_PER_SLOT || 40),
   allowedTimes: allowedTimes.length
@@ -28,6 +29,10 @@ export const env = {
       ],
   supabaseUrl: required('SUPABASE_URL'),
   supabaseServiceRoleKey: required('SUPABASE_SERVICE_ROLE_KEY'),
-  resendApiKey: required('RESEND_API_KEY'),
-  resendFrom: required('RESEND_FROM')
+  smtpHost: required('RESERVATION_SMTP_HOST'),
+  smtpPort: Number(required('RESERVATION_SMTP_PORT')),
+  smtpSecure: process.env.RESERVATION_SMTP_SECURE === 'true',
+  smtpUser: required('RESERVATION_SMTP_USER'),
+  smtpPass: required('RESERVATION_SMTP_PASS'),
+  smtpFrom: required('RESERVATION_SMTP_FROM')
 };

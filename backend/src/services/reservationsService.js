@@ -2,8 +2,10 @@ import { randomBytes } from 'crypto';
 import { supabase } from '../lib/supabase.js';
 import { env } from '../config/env.js';
 import { validateReservationTime } from '../utils/validation.js';
-import { resend } from '../lib/resend.js';
+import { sendMail } from '../lib/mailer.js';
 import { buildReservationEmail } from '../templates/reservationConfirmation.js';
+import { buildAdminReservationEmail } from '../templates/reservationAdminNotification.js';
+import { emitReservationEvent } from '../lib/socket.js';
 
 const generateConfirmationCode = () => randomBytes(3).toString('hex').toUpperCase();
 
@@ -83,12 +85,32 @@ export const createReservation = async ({
     cancelUrl
   });
 
-  await resend.emails.send({
-    from: env.resendFrom,
+  await sendMail({
     to: email,
     subject: emailContent.subject,
     html: emailContent.html
   });
+
+  if (env.adminEmail) {
+    const adminEmailContent = buildAdminReservationEmail({
+      name,
+      email,
+      phone,
+      date,
+      time,
+      guests,
+      notes,
+      reservationId: data.id
+    });
+
+    await sendMail({
+      to: env.adminEmail,
+      subject: adminEmailContent.subject,
+      html: adminEmailContent.html
+    });
+  }
+
+  emitReservationEvent('reservation:new', data);
 
   return { ok: true, reservation: data, confirmationCode };
 };
@@ -124,6 +146,8 @@ export const cancelReservation = async ({ id }) => {
     throw new Error(error.message);
   }
 
+  emitReservationEvent('reservation:update', data);
+
   return data;
 };
 
@@ -138,6 +162,8 @@ export const updateReservationStatus = async ({ id, status }) => {
   if (error) {
     throw new Error(error.message);
   }
+
+  emitReservationEvent('reservation:update', data);
 
   return data;
 };
@@ -183,4 +209,20 @@ export const cancelReservationByCode = async ({ id, code }) => {
 
   const updated = await cancelReservation({ id });
   return { ok: true, reservation: updated };
+};
+
+export const sendTestEmail = async () => {
+  const html = `
+    <div style="font-family: Arial, sans-serif; padding: 20px;">
+      <h2>Teste de email - Sabor & Alma</h2>
+      <p>Se voce recebeu esta mensagem, o SMTP esta configurado corretamente.</p>
+      <p>Data: ${new Date().toISOString()}</p>
+    </div>
+  `;
+
+  await sendMail({
+    to: env.adminEmail,
+    subject: 'Teste SMTP - Sabor & Alma',
+    html
+  });
 };

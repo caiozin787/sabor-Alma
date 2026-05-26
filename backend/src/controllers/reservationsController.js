@@ -6,6 +6,7 @@ import {
   confirmReservationByCode,
   createReservation,
   listReservations,
+  sendTestEmail,
   updateReservationStatus
 } from '../services/reservationsService.js';
 import { buildStatusPage } from '../templates/reservationStatusPage.js';
@@ -162,5 +163,14 @@ export const cancelReservationByEmail = async (req, res) => {
       title: 'Erro ao cancelar',
       message: 'Nao foi possivel cancelar a reserva agora.'
     }));
+  }
+};
+
+export const sendAdminTestEmail = async (req, res) => {
+  try {
+    await sendTestEmail();
+    return res.json({ message: 'Email de teste enviado.' });
+  } catch (error) {
+    return res.status(500).json({ error: error.message || 'Erro ao enviar email de teste.' });
   }
 };
